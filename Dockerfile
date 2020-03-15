@@ -42,6 +42,8 @@ RUN set -ex \
 # Copy your application code to the container (make sure you create a .dockerignore file if any large files or directories should be excluded)
 RUN mkdir /code/
 WORKDIR /code/
+
+# Make sure the path to your django code is mapped correctly
 ADD . /code/
 
 # uWSGI will listen on this port
@@ -51,7 +53,7 @@ EXPOSE 8000
 ENV DJANGO_SETTINGS_MODULE=my_project.settings.deploy
 
 # Call collectstatic (customize the following line with the minimal environment variables needed for manage.py to run):
-RUN DATABASE_URL='' python manage.py collectstatic --noinput
+# RUN DATABASE_URL='' python manage.py collectstatic --noinput
 
 # Tell uWSGI where to find your wsgi file (change this):
 ENV UWSGI_WSGI_FILE=my_project/wsgi.py
